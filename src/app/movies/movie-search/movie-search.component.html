@@ -1,0 +1,58 @@
+<h1>Search IMDB</h1>
+
+<form>
+	<div class="form-group">
+		<input class="form-control" type="text" name="to-search" #searchInput>
+	</div>
+	<button class="btn btn-success" (click)="search(searchInput)">Search</button>
+</form>
+
+<hr/>
+
+<div *ngIf="searched" class="row">
+	<div class="col-xs-3">
+		<img [src]="searched.Poster" alt="No Poster" class="img-responsive">
+	</div>
+	<div class="col-xs-9">
+		<h2>{{searched.Year}}</h2>
+		<p>{{searched.Plot}}</p>
+		<div class="row">
+			<div class="col-xs-12">
+				<div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default">Title</button>
+						<button type="button" class="btn btn-success">{{searched.Title}}</button>
+					</div>
+				</div>
+				<div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default">Released</button>
+						<button type="button" class="btn btn-success">{{searched.Released}}</button>
+					</div>
+				</div>
+				<div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default">Runtime</button>
+						<button type="button" class="btn btn-success">{{searched.Runtime}}</button>
+					</div>
+				</div>
+				<div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default">Genre</button>
+						<button type="button" class="btn btn-success">{{searched.Genre}}</button>
+					</div>
+				</div>
+				<div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default">imdbID</button>
+						<button type="button" class="btn btn-success">{{searched.imdbID}}</button>
+					</div>
+				</div>
+			</div>
+		</div><!--row-->
+		<div>
+			<hr />
+			<button class="btn btn-success" (click)="postMovie()">Add Movie</button>
+		</div>
+	</div>
+</div>

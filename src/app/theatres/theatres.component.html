@@ -1,0 +1,19 @@
+<div class="container">
+	<div>
+		<ul class="nav nav-tabs" role="tablist" (click)="switchTabs($event)">
+			<li role="presentation" class="active"><a href="#cities" role="tab">Add Cities</a></li>
+			<li role="presentation"><a href="#theatres" role="tab">Add Theatre</a></li>
+		</ul>
+		<!-- Nav tabs -->
+
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="cities">
+				<app-add-cities></app-add-cities>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="theatres">
+				<app-add-theatres></app-add-theatres>
+			</div>
+		</div>
+		<!-- Tab panes -->
+	</div>
+</div>

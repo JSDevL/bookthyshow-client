@@ -1,0 +1,15 @@
+<div class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" [routerLink]="['/']">Brand</a>
+		</div>
+		<ul class="nav navbar-nav navbar-left">
+			<li><a [routerLink]="['/']">Home</a></li>
+			<li><a [routerLink]="['/movies']">Movies</a></li>
+			<li><a [routerLink]="['/theatres']">Theatres</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- Router Outlet -->
+<router-outlet></router-outlet>

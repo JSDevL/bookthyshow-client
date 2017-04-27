@@ -1,0 +1,26 @@
+<hr />
+<form class="form-inline">
+	<div class="form-group">
+		<label for="name">Name:</label>
+		<input type="text" id="name" class="form-control" [(ngModel)]="newTheatre.name" name="name">
+	</div>
+	<div class="form-group">
+		<label for="location">Location:</label>
+		<input type="text" id="location" class="form-control" [(ngModel)]="newTheatre.location" name="location">
+	</div>
+	<div class="form-group">
+		<label for="city">Select city:</label>
+		<select class="form-control" id="city">
+			<option *ngFor="let city of cities">{{city.name}}</option>
+		</select>
+	</div>
+	<button class="btn btn-success" (click)="addTheatre(newTheatre)">Add Theatre</button>
+</form>
+<hr />
+<div *ngFor="let theatre of theatres">
+	<div class="theatre-pill btn-group">
+		<button type="button" class="btn btn-default">{{theatre.name}}</button>
+		<button type="button" class="btn btn-default">{{theatre.location}}</button>
+		<button type="button" class="btn btn-danger" (click)="deleteTheatre(theatre)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+	</div>
+</div>
