@@ -29,11 +29,11 @@ export class AddTheatresComponent implements OnInit {
 	constructor(private citiesService: CitiesService, private theatresService: TheatresService) { }
 
 	ngOnInit() {
-		this.citiesService.citiesUpdated.subscribe( (citiesUpdated) => {
+		this.citiesService.citiesUpdated.subscribe( (citiesUpdated: City[]) => {
 			this.cities = citiesUpdated;
 		});
 
-		this.theatresService.theatresUpdated.subscribe( (theatresUpdated) => {
+		this.theatresService.theatresUpdated.subscribe( (theatresUpdated: Theatre[]) => {
 			this.theatres = theatresUpdated;
 		});
 	}

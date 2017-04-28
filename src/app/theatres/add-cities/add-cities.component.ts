@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import axios from 'axios';
+import { Http } from '@angular/http';
 
 /**
  * Models
@@ -22,19 +22,19 @@ export class AddCitiesComponent implements OnInit {
 	newCity: City = { name: '' };
 	cities: City[];
 
-	constructor(private citiesService: CitiesService) {}
+	constructor(private citiesService: CitiesService, private http: Http) {}
 
 	ngOnInit() {
-		this.citiesService.citiesUpdated.subscribe( (citiesUpdated) => {
+		this.citiesService.citiesUpdated.subscribe( (citiesUpdated: City[]) => {
 			this.cities = citiesUpdated;
 		});
 	}
 
 	addCity(newCity: City) {
-		axios.post('/api/cities', newCity);
+		this.http.post('/api/cities', newCity).subscribe();
 	}
 
 	removeCity(city: City){
-		axios.delete(`/api/cities/${city._id}`);
+		this.http.delete(`/api/cities/${city._id}`).subscribe();
 	}
 }
