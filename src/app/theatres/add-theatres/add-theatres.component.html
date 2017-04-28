@@ -1,3 +1,4 @@
+<h2>Add Theatres</h2>
 <hr />
 <form class="form-inline">
 	<div class="form-group">
@@ -10,17 +11,27 @@
 	</div>
 	<div class="form-group">
 		<label for="city">Select city:</label>
-		<select class="form-control" id="city">
-			<option *ngFor="let city of cities">{{city.name}}</option>
+		<select class="form-control" id="city" [(ngModel)]="selectedCityID" name="city">
+			<option *ngFor="let city of cities" [value]="city._id">{{city.name}}</option>
 		</select>
 	</div>
 	<button class="btn btn-success" (click)="addTheatre(newTheatre)">Add Theatre</button>
 </form>
+<h2>Search Theatres By City</h2>
+<div class="form-group">
+	<label for="city">Select city:</label>
+	<select class="form-control" id="citySearch" (change)="search($event)">
+		<option selected>Select City</option>
+		<option *ngFor="let city of cities" [value]="city._id">{{city.name}}</option>
+	</select>
+</div>
 <hr />
-<div *ngFor="let theatre of theatres">
-	<div class="theatre-pill btn-group">
-		<button type="button" class="btn btn-default">{{theatre.name}}</button>
-		<button type="button" class="btn btn-default">{{theatre.location}}</button>
-		<button type="button" class="btn btn-danger" (click)="deleteTheatre(theatre)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+<div *ngIf="searchedCity">
+	<div *ngFor="let theatre of searchedCity.theatres">
+		<div class="theatre-pill btn-group">
+			<button type="button" class="btn btn-default">{{theatre.name}}</button>
+			<button type="button" class="btn btn-default">{{theatre.location}}</button>
+			<button type="button" class="btn btn-danger" (click)="deleteTheatre(theatre)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+		</div>
 	</div>
 </div>

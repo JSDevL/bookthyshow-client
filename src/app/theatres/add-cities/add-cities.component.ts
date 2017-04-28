@@ -19,7 +19,7 @@ import { CitiesService } from '../cities.service';
 	styleUrls: ['./add-cities.component.css']
 })
 export class AddCitiesComponent implements OnInit {
-	newCity: City = { name: '' };
+	newCity: City = new City();
 	cities: City[];
 
 	constructor(private citiesService: CitiesService, private http: Http) {}

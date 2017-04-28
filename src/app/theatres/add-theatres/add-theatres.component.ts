@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
+import _ from 'underscore';
 
 /**
  * Models
@@ -21,12 +22,17 @@ import { TheatresService } from '../theatres.service';
 	styleUrls: ['./add-theatres.component.css']
 })
 export class AddTheatresComponent implements OnInit {
-	newTheatre: Theatre = {name: '', location: ''};
+	newTheatre: Theatre;
+	selectedCityID: String;
 
 	cities: City[];
 	theatres: Theatre[];
 
-	constructor(private citiesService: CitiesService, private theatresService: TheatresService, private http: Http) { }
+	searchedCity: City;
+
+	constructor(private citiesService: CitiesService, private theatresService: TheatresService, private http: Http) {
+		this.newTheatre = new Theatre();
+	}
 
 	ngOnInit() {
 		this.citiesService.citiesUpdated.subscribe( (citiesUpdated: City[]) => {
@@ -39,11 +45,30 @@ export class AddTheatresComponent implements OnInit {
 	}
 
 	addTheatre(newTheatre){
-		this.http.post(`/api/theatres/`, newTheatre).subscribe();
+		this.http.post(`/api/theatres/`, newTheatre).subscribe( (response: Response) => {
+			const newTheatre = response.json()
+			if(response.status === 200){
+				this.http.put(`/api/cities/${this.selectedCityID}`, newTheatre).subscribe( (response) => {
+					if(response.status === 200){
+						for(let city of this.cities){
+							if(city._id === this.selectedCityID){
+								city.theatres.push(newTheatre);
+							}
+						}
+					}
+				});
+			}
+		});
 	}
 
 	deleteTheatre(theatre: Theatre){
 		this.http.delete(`/api/theatres/${theatre._id}`).subscribe();
+	}
+
+	search(event){
+		this.searchedCity = _.find(this.cities, (city: City) => {
+			return event.target.value === city._id.toString();
+		});
 	}
 
 }

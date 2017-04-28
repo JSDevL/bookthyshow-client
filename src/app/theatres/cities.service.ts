@@ -26,8 +26,8 @@ export class CitiesService {
 		});
 
 		this.socket.on('DELETE /api/cities', (_id: String) => {
-			this.cities = _.reject(this.cities, (movie: City) => {
-				return movie._id.toString() === _id;
+			this.cities = _.reject(this.cities, (city: City) => {
+				return city._id.toString() === _id;
 			});
 			this.citiesUpdated.next(this.cities);
 		});
@@ -35,6 +35,7 @@ export class CitiesService {
 		http.get(`/api/cities/`).subscribe( (response) => {
 			this.cities = response.json();
 			this.citiesUpdated.next(this.cities);
+			console.log('intitial', this.cities);
 		});
 	}
 }
