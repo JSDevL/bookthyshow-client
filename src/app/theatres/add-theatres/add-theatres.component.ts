@@ -25,10 +25,10 @@ export class AddTheatresComponent implements OnInit {
 	newTheatre: Theatre;
 	selectedCityID: String;
 
-	cities: City[];
-	theatres: Theatre[];
+	cities: City[] = [];
+	theatres: Theatre[] = [];
 
-	searchedCity: City;
+	searchedCityID: String;
 
 	constructor(private citiesService: CitiesService, private theatresService: TheatresService, private http: Http) {
 		this.newTheatre = new Theatre();
@@ -63,12 +63,6 @@ export class AddTheatresComponent implements OnInit {
 
 	deleteTheatre(theatre: Theatre){
 		this.http.delete(`/api/theatres/${theatre._id}`).subscribe();
-	}
-
-	search(event){
-		this.searchedCity = _.find(this.cities, (city: City) => {
-			return event.target.value === city._id.toString();
-		});
 	}
 
 }

@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { TheatresComponent } from './theatres/theatres.component';
 import { AddCitiesComponent } from './theatres/add-cities/add-cities.component';
 import { AddTheatresComponent } from './theatres/add-theatres/add-theatres.component';
+import { MoviesToTheatreComponent } from './theatres/movies-to-theatre/movies-to-theatre.component';
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import { AddTheatresComponent } from './theatres/add-theatres/add-theatres.compo
 		TheatresComponent,
 		AddCitiesComponent,
 		AddTheatresComponent,
+		MoviesToTheatreComponent,
 	],
 	imports: [
 		BrowserModule,

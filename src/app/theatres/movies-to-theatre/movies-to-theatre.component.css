@@ -1,0 +1,9 @@
+.left-bordered-col{
+	border-style: solid;
+	border-color: #eee;
+	border-width: 0px 0px 0px 1px;
+}
+
+.theatre-pill{
+	margin: 0px 20px 20px 0;
+}
