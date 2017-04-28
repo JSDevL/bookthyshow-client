@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import axios from 'axios';
+import { Http } from '@angular/http';
 
 /**
  * Models
@@ -26,7 +26,7 @@ export class AddTheatresComponent implements OnInit {
 	cities: City[];
 	theatres: Theatre[];
 
-	constructor(private citiesService: CitiesService, private theatresService: TheatresService) { }
+	constructor(private citiesService: CitiesService, private theatresService: TheatresService, private http: Http) { }
 
 	ngOnInit() {
 		this.citiesService.citiesUpdated.subscribe( (citiesUpdated: City[]) => {
@@ -39,11 +39,11 @@ export class AddTheatresComponent implements OnInit {
 	}
 
 	addTheatre(newTheatre){
-		axios.post(`/api/theatres/`, newTheatre);
+		this.http.post(`/api/theatres/`, newTheatre).subscribe();
 	}
 
 	deleteTheatre(theatre: Theatre){
-		axios.delete(`/api/theatres/${theatre._id}`);
+		this.http.delete(`/api/theatres/${theatre._id}`).subscribe();
 	}
 
 }
