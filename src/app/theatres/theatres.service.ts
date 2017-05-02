@@ -26,14 +26,9 @@ export class TheatresService {
 		});
 
 		this.socket.on('DELETE /api/theatres', (_id: String) => {
-			this.theatres = _.reject(this.theatres, (movie: Theatre) => {
-				return movie._id.toString() === _id;
+			this.theatres = _.reject(this.theatres, (theatre: Theatre) => {
+				return theatre._id.toString() === _id;
 			});
-			this.theatresUpdated.next(this.theatres);
-		});
-
-		http.get(`/api/theatres/`).subscribe( (response) => {
-			this.theatres = response.json();
 			this.theatresUpdated.next(this.theatres);
 		});
 	}

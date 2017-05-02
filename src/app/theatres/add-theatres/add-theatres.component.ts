@@ -23,15 +23,20 @@ import { TheatresService } from '../theatres.service';
 })
 export class AddTheatresComponent implements OnInit {
 	newTheatre: Theatre;
-	selectedCityID: String;
 
-	cities: City[] = [];
-	theatres: Theatre[] = [];
+	cities: City[];
+	theatres: Theatre[];
 
-	searchedCityID: String;
+	searchedCityName: String;
+	theatresGroupedByCityName: Object;
 
 	constructor(private citiesService: CitiesService, private theatresService: TheatresService, private http: Http) {
 		this.newTheatre = new Theatre();
+		this.cities = [];
+		this.theatres = [];
+
+		this.searchedCityName = '';
+		this.theatresGroupedByCityName = {};
 	}
 
 	ngOnInit() {
@@ -41,28 +46,18 @@ export class AddTheatresComponent implements OnInit {
 
 		this.theatresService.theatresUpdated.subscribe( (theatresUpdated: Theatre[]) => {
 			this.theatres = theatresUpdated;
+			this.theatresGroupedByCityName = _.groupBy(this.theatres, (theatre) => {
+				return theatre.city.name;
+			});
 		});
 	}
 
 	addTheatre(newTheatre){
-		this.http.post(`/api/theatres/`, newTheatre).subscribe( (response: Response) => {
-			const newTheatre = response.json()
-			if(response.status === 200){
-				this.http.put(`/api/cities/${this.selectedCityID}`, newTheatre).subscribe( (response) => {
-					if(response.status === 200){
-						for(let city of this.cities){
-							if(city._id === this.selectedCityID){
-								city.theatres.push(newTheatre);
-							}
-						}
-					}
-				});
-			}
-		});
+		this.http.post('/api/theatres', newTheatre).subscribe( (response: Response) => {});
 	}
 
 	deleteTheatre(theatre: Theatre){
-		this.http.delete(`/api/theatres/${theatre._id}`).subscribe();
+		this.http.delete(`/api/theatres/${theatre._id}`).subscribe( (response: Response) => {});
 	}
 
 }

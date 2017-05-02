@@ -19,14 +19,17 @@ import { CitiesService } from '../cities.service';
 	styleUrls: ['./add-cities.component.css']
 })
 export class AddCitiesComponent implements OnInit {
-	newCity: City = new City();
+	newCity: City;
 	cities: City[];
 
-	constructor(private citiesService: CitiesService, private http: Http) {}
+	constructor(private citiesService: CitiesService, private http: Http) {
+		this.newCity = new City();
+		this.cities = [];
+	}
 
 	ngOnInit() {
-		this.citiesService.citiesUpdated.subscribe( (citiesUpdated: City[]) => {
-			this.cities = citiesUpdated;
+		this.citiesService.citiesUpdated.subscribe( (update: City[]) => {
+			this.cities = update;
 		});
 	}
 
@@ -35,6 +38,11 @@ export class AddCitiesComponent implements OnInit {
 	}
 
 	removeCity(city: City){
-		this.http.delete(`/api/cities/${city._id}`).subscribe();
+		this.http.delete(`/api/cities/${city._id}`).subscribe(
+			(response) => {},
+			(error) => {
+				alert(error.json().name);
+			}
+		);
 	}
 }

@@ -26,6 +26,13 @@ export class MoviesToTheatreComponent implements OnInit {
 	selectedCityName: String;
 	theatresGroupedByCityName: Object;
 
+	binding: {
+		theatre: String,
+		movie: String,
+		dates: String[],
+		timings: String[]
+	};
+
 	constructor(
 		private citiesService: CitiesService,
 		private theatreService: TheatresService,
@@ -38,6 +45,13 @@ export class MoviesToTheatreComponent implements OnInit {
 
 		this.selectedCityName = '';
 		this.theatresGroupedByCityName = {};
+
+		this.binding = {
+			theatre: '',
+			movie: '',
+			dates: [],
+			timings: []
+		}
 	}
 
 	ngOnInit() {
@@ -57,24 +71,24 @@ export class MoviesToTheatreComponent implements OnInit {
 		});
 	}
 
-	// removeDate(date: String){
-	// 	this.binding.dates = _.reject(this.binding.dates, function(dateToRemove){
-	// 		return dateToRemove === date;
-	// 	});
-	// }
+	removeDate(date: String){
+		this.binding.dates = _.reject(this.binding.dates, function(dateToRemove){
+			return dateToRemove === date;
+		});
+	}
 
-	// removeTime(time: String){
-	// 	this.binding.timings = _.reject(this.binding.timings, function(timeToRemove){
-	// 		return timeToRemove === time;
-	// 	});
-	// }
+	removeTime(time: String){
+		this.binding.timings = _.reject(this.binding.timings, function(timeToRemove){
+			return timeToRemove === time;
+		});
+	}
 
-	// bind(){
-	// 	this.http.post(`/api/theatres/${this.binding.theatre}/movies/${this.binding.movie}/`, {
-	// 		dates: this.binding.dates,
-	// 		timings: this.binding.timings
-	// 	}).subscribe( (response) => {}, (error) => {
-	// 		alert(error.message);
-	// 	});
-	// }
+	bind(){
+		this.http.post(`/api/theatres/${this.binding.theatre}/movies/${this.binding.movie}/`, {
+			dates: this.binding.dates,
+			timings: this.binding.timings
+		}).subscribe( (response) => {}, (error) => {
+			alert(error.message);
+		});
+	}
 }

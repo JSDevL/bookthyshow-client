@@ -1,57 +1,73 @@
 <h1>Bind Movies to Theatre</h1>
 <hr />
 <div class="row">
-	<div class="col-xs-3">
+	<div class="col-xs-4">
 		<div class="form-group">
 			<label for="citySearch">Select city:</label>
-			<select class="form-control" id="citySearch" name="citySearch">
-				<option selected>Select City</option>
-				<option>Dummy1</option>
-				<option>Dummy2</option>
-				<option>Dummy3</option>
-				<option>Dummy4</option>
+			<select class="form-control" [(ngModel)]="selectedCityName" id="citySearch">
+				<option value="" selected>Select City</option>
+				<option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
 			</select>
 		</div>
 	</div><!--col-xs-3-->
+	<div class="col-xs-4">
+		<div class="form-group">
+			<label for="citySearch">Select Theatre:</label>
+			<select class="form-control" [(ngModel)]="binding.theatre" id="theatreSearch">
+				<option value="" selected>Select Theatre</option>
+				<ng-container *ngIf="theatresGroupedByCityName[selectedCityName]">
+					<option *ngFor="let theatre of theatresGroupedByCityName[selectedCityName]" [value]="theatre._id">{{theatre.name}}</option>
+				</ng-container>
+			</select>
+		</div>
+	</div><!--col-xs-3-->
+	<div class="col-xs-4">
+		<div class="form-group">
+			<label for="citySearch">Select Movie:</label>
+			<select class="form-control" [(ngModel)]="binding.movie" id="movieSearch">
+				<option value="" selected>Select Movie</option>
+				<option *ngFor="let movie of movies" [value]="movie._id">{{movie.Title}}</option>
+			</select>
+		</div>
+	</div><!--col-xs-3-->
+</div><!--row-->
+<hr/>
+<div class="row">
+	<div class="col-xs-3">
+		<div class="form-group">
+			<label>Add Dates:</label>
+			<input type="date" class="form-control" #dateInput>
+		</div>
+		<button class="btn btn-success" (click)="binding.dates.push(dateInput.value)">Add</button>
+	</div><!--col-xs-3-->
 	<div class="col-xs-9 left-bordered-col">
-		<div>
-			<label>Select Theatre:</label>
+		<div><label>Added Dates:</label></div>
+		<div class="date-pill btn-group" *ngFor="let date of binding.dates">
+			<button type="button" class="btn btn-default">{{date}}</button>
+			<button type="button" class="btn btn-danger" (click)="removeDate(date)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
 		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Theatre</button>
-			<button type="button" class="btn btn-default">Dummy Location</button>
+	</div><!--col-xs-9-->
+</div><!--row-->
+<hr/>
+<div class="row">
+	<div class="col-xs-3">
+		<div class="form-group">
+			<label>Add Timings:</label>
+			<input type="time" class="form-control" #timeInput>
 		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Theatre</button>
-			<button type="button" class="btn btn-default">Dummy Location</button>
+		<button class="btn btn-success" (click)="binding.timings.push(timeInput.value)">Add</button>
+	</div><!--col-xs-3-->
+	<div class="col-xs-9 left-bordered-col">
+		<div><label>Added Timings:</label></div>
+		<div class="date-pill btn-group" *ngFor="let time of binding.timings">
+			<button type="button" class="btn btn-default">{{time}}</button>
+			<button type="button" class="btn btn-danger" (click)="removeTime(time)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
 		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Theatre</button>
-			<button type="button" class="btn btn-default">Dummy Location</button>
-		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Theatre</button>
-			<button type="button" class="btn btn-default">Dummy Location</button>
-		</div>
-
-		<div>
-			<label>Select Movie:</label>
-		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Movie Title</button>
-			<button type="button" class="btn btn-default">Dummy Year</button>
-		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Movie Title</button>
-			<button type="button" class="btn btn-default">Dummy Year</button>
-		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Movie Title</button>
-			<button type="button" class="btn btn-default">Dummy Year</button>
-		</div>
-		<div class="theatre-pill btn-group">
-			<button type="button" class="btn btn-default">Dummy Movie Title</button>
-			<button type="button" class="btn btn-default">Dummy Year</button>
-		</div>
+	</div><!--col-xs-9-->
+</div><!--row-->
+<hr/>
+<div class="row">
+	<div class="col-xs-12">
+		<button class="btn btn-success form-control" (click)="bind()">Bind</button>
 	</div>
 </div>

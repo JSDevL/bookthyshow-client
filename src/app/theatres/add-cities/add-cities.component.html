@@ -7,8 +7,13 @@
 	</div>
 	<button class="btn btn-success" (click)="addCity(newCity)">Add</button>
 </form>
-<h2>Added Cities</h2>
 <hr />
+<div>
+	<label >Added Cities:</label>
+</div>
+<div *ngIf="cities.length === 0">
+	<p>No cities added</p>
+</div>
 <div *ngFor="let city of cities">
 	<div class="city-pill btn-group">
 		<button type="button" class="btn btn-default">{{city.name}}</button>

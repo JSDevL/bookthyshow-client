@@ -1,7 +1,8 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Subject } from 'rxjs/Subject';
 import * as io from 'socket.io-client';
 import _ from 'underscore';
-import axios from 'axios';
 
 /**
  * Models
@@ -9,30 +10,31 @@ import axios from 'axios';
 
 import { Movie } from './movies.model';
 
+@Injectable()
 export class MoviesService {
-	moviesUpdated = new EventEmitter<Movie[]>();
+	moviesUpdated = new Subject();
 
 	movies: Movie[] = [];
 	socket;
 
-	constructor() {
+	constructor(private http: Http) {
 		this.socket = io.connect();
 
 		this.socket.on('POST /api/movies', (data: Movie) => {
 			this.movies.push(data);
-			this.moviesUpdated.emit(this.movies);
+			this.moviesUpdated.next(this.movies);
 		});
 
 		this.socket.on('DELETE /api/movies', (_id: String) => {
 			this.movies = _.reject(this.movies, (movie: Movie) => {
 				return movie._id.toString() === _id;
 			});
-			this.moviesUpdated.emit(this.movies);
+			this.moviesUpdated.next(this.movies);
 		});
 
-		axios.get(`/api/movies/`).then( (response) => {
-			this.movies = response.data;
-			this.moviesUpdated.emit(this.movies);
+		this.http.get(`/api/movies/`).subscribe( (response) => {
+			this.movies = response.json();
+			this.moviesUpdated.next(this.movies);
 		});
 	}
 }

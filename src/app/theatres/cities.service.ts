@@ -31,11 +31,5 @@ export class CitiesService {
 			});
 			this.citiesUpdated.next(this.cities);
 		});
-
-		http.get(`/api/cities/`).subscribe( (response) => {
-			this.cities = response.json();
-			this.citiesUpdated.next(this.cities);
-			console.log('intitial', this.cities);
-		});
 	}
 }
