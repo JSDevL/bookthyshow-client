@@ -4,19 +4,25 @@
 	<div class="col-xs-4">
 		<div class="form-group">
 			<label for="citySearch">Select city:</label>
-			<select class="form-control" [(ngModel)]="selectedCityName" id="citySearch">
+			<select class="form-control" id="citySearch" (change)="getSelectedCity($event)">
+				<!--Default-->
 				<option value="" selected>Select City</option>
-				<option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
+
+
+				<option *ngFor="let city of cities" [value]="city._id">{{city.name}}</option>
 			</select>
 		</div>
 	</div><!--col-xs-3-->
 	<div class="col-xs-4">
 		<div class="form-group">
 			<label for="citySearch">Select Theatre:</label>
-			<select class="form-control" [(ngModel)]="binding.theatre" id="theatreSearch">
+			<select class="form-control" id="theatreSearch" [disabled]="!selectedCity" (change)="getSelectedTheatre($event)">
+				<!--Default-->
 				<option value="" selected>Select Theatre</option>
-				<ng-container *ngIf="theatresGroupedByCityName[selectedCityName]">
-					<option *ngFor="let theatre of theatresGroupedByCityName[selectedCityName]" [value]="theatre._id">{{theatre.name}}</option>
+
+
+				<ng-container *ngIf="selectedCity">
+					<option *ngFor="let theatre of theatresGroupedByCityID[selectedCity._id]" [value]="theatre._id">{{theatre.name}}</option>
 				</ng-container>
 			</select>
 		</div>
@@ -24,50 +30,65 @@
 	<div class="col-xs-4">
 		<div class="form-group">
 			<label for="citySearch">Select Movie:</label>
-			<select class="form-control" [(ngModel)]="binding.movie" id="movieSearch">
+			<select class="form-control" id="movieSearch" [disabled]="!selectedTheatre" (change)="getSelectedMovie($event)">
+				<!--Default-->
 				<option value="" selected>Select Movie</option>
+
+				
 				<option *ngFor="let movie of movies" [value]="movie._id">{{movie.Title}}</option>
 			</select>
 		</div>
 	</div><!--col-xs-3-->
 </div><!--row-->
 <hr/>
-<div class="row">
-	<div class="col-xs-3">
-		<div class="form-group">
-			<label>Add Dates:</label>
-			<input type="date" class="form-control" #dateInput>
+
+<div *ngIf="!binding && selectedMovie && selectedTheatre">
+	<p>no binding exists.</p>
+	<button class="btn btn-success" (click)="addBinding()">Add Binding</button>
+	<hr>
+</div>
+
+<div *ngIf="binding">
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label>Add Dates:</label>
+				<input type="date" class="form-control" #dateInput>
+			</div>
+			<button class="btn btn-success" (click)="binding.dates.push(dateInput.value)">Add</button>
+		</div><!--col-xs-3-->
+		<div class="col-xs-9 left-bordered-col">
+			<div><label>Added Dates:</label></div>
+			<div class="date-pill btn-group" *ngFor="let date of binding.dates">
+				<button type="button" class="btn btn-default">{{date}}</button>
+				<button type="button" class="btn btn-danger" (click)="binding.dates.splice(binding.dates.indexOf(date), 1)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+			</div>
+		</div><!--col-xs-9-->
+	</div><!--row-->
+	<hr/>
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="form-group">
+				<label>Add Timings:</label>
+				<input type="time" class="form-control" #timeInput>
+			</div>
+			<button class="btn btn-success" (click)="binding.timings.push(timeInput.value)">Add</button>
+		</div><!--col-xs-3-->
+		<div class="col-xs-9 left-bordered-col">
+			<div><label>Added Timings:</label></div>
+			<div class="date-pill btn-group" *ngFor="let time of binding.timings">
+				<button type="button" class="btn btn-default">{{time}}</button>
+				<button type="button" class="btn btn-danger" (click)="binding.timings.splice(binding.timings.indexOf(time), 1)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
+			</div>
+		</div><!--col-xs-9-->
+	</div><!--row-->
+	<hr/>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="btn-group">
+				<button class="btn btn-danger" (click)="delete()">Delete</button>
+				<button class="btn btn-success" (click)="save()">Save</button>
+			</div>
 		</div>
-		<button class="btn btn-success" (click)="binding.dates.push(dateInput.value)">Add</button>
-	</div><!--col-xs-3-->
-	<div class="col-xs-9 left-bordered-col">
-		<div><label>Added Dates:</label></div>
-		<div class="date-pill btn-group" *ngFor="let date of binding.dates">
-			<button type="button" class="btn btn-default">{{date}}</button>
-			<button type="button" class="btn btn-danger" (click)="removeDate(date)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
-		</div>
-	</div><!--col-xs-9-->
-</div><!--row-->
-<hr/>
-<div class="row">
-	<div class="col-xs-3">
-		<div class="form-group">
-			<label>Add Timings:</label>
-			<input type="time" class="form-control" #timeInput>
-		</div>
-		<button class="btn btn-success" (click)="binding.timings.push(timeInput.value)">Add</button>
-	</div><!--col-xs-3-->
-	<div class="col-xs-9 left-bordered-col">
-		<div><label>Added Timings:</label></div>
-		<div class="date-pill btn-group" *ngFor="let time of binding.timings">
-			<button type="button" class="btn btn-default">{{time}}</button>
-			<button type="button" class="btn btn-danger" (click)="removeTime(time)"><span class="glyphicon glyphicon glyphicon-trash"></span></button>
-		</div>
-	</div><!--col-xs-9-->
-</div><!--row-->
-<hr/>
-<div class="row">
-	<div class="col-xs-12">
-		<button class="btn btn-success form-control" (click)="bind()">Bind</button>
 	</div>
 </div>

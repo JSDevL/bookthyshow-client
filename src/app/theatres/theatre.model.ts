@@ -1,5 +1,5 @@
 export class Theatre{
-	_id?: any;
+	_id?: String;
 	name: String;
 	location: String;
 	city: String;

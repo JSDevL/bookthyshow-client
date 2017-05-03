@@ -8,4 +8,9 @@ export interface Movie{
 	Genre: String;
 	imdbID: String;
 	Poster: String;
+	theatres?: {
+		theatre: String
+		dates: String[],
+		timings: String[]
+	}[];
 };

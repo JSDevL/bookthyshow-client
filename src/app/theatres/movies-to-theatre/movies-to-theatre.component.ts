@@ -19,36 +19,40 @@ import { Movie } from '../../movies/movies.model';
 	styleUrls: ['./movies-to-theatre.component.css']
 })
 export class MoviesToTheatreComponent implements OnInit {
-	cities: City[];
-	theatres: Theatre[];
-	movies: Movie[];
-
-	selectedCityName: String;
-	theatresGroupedByCityName: Object;
+	// inits
+	cities: City[] = [];
+	theatres: Theatre[] = [];
+	movies: Movie[] = [];
+	// selected inputs
+	selectedCity: City;
+	selectedTheatre: Theatre;
+	selectedMovie: Movie;
+	// generated
+	theatresGroupedByCityID: any; // to filter theatres based on selectedCity
+	// binding - generated if doesn't exist or assigned if exists
+	binding: {
+		theatre: String,
+		movie: String,
+		dates: String[],
+		timings: String[]
+	} = undefined;
 
 	constructor(
 		private citiesService: CitiesService,
 		private theatreService: TheatresService,
 		private moviesService: MoviesService,
 		private http: Http
-	) {
-		this.cities = [];
-		this.theatres = [];
-		this.movies = [];
-
-		this.selectedCityName = '';
-		this.theatresGroupedByCityName = {};
-	}
+	) {}
 
 	ngOnInit() {
-		this.citiesService.citiesUpdated.subscribe( (citiesUpdated: City[]) => {
-			this.cities = citiesUpdated;
+		this.citiesService.citiesUpdated.subscribe( (updates: City[]) => {
+			this.cities = updates;
 		});
 
 		this.theatreService.theatresUpdated.subscribe( (updates: Theatre[]) => {
 			this.theatres = updates;
-			this.theatresGroupedByCityName = _.groupBy(this.theatres, (theatre) => {
-				return theatre.city.name;
+			this.theatresGroupedByCityID = _.groupBy(this.theatres, (theatre) => {
+				return theatre.city._id;
 			});
 		});
 
@@ -57,24 +61,97 @@ export class MoviesToTheatreComponent implements OnInit {
 		});
 	}
 
-	// removeDate(date: String){
-	// 	this.binding.dates = _.reject(this.binding.dates, function(dateToRemove){
-	// 		return dateToRemove === date;
-	// 	});
-	// }
+	getSelectedCity(e) {
+		this.selectedCity = _.find(this.cities, (city) => {
+			return city._id.toString() === e.target.value;
+		});
+	}
 
-	// removeTime(time: String){
-	// 	this.binding.timings = _.reject(this.binding.timings, function(timeToRemove){
-	// 		return timeToRemove === time;
-	// 	});
-	// }
+	getSelectedTheatre(e) {
+		this.selectedTheatre = _.find(this.theatres, (theatre) => {
+			return theatre._id.toString() === e.target.value;
+		});
 
-	// bind(){
-	// 	this.http.post(`/api/theatres/${this.binding.theatre}/movies/${this.binding.movie}/`, {
-	// 		dates: this.binding.dates,
-	// 		timings: this.binding.timings
-	// 	}).subscribe( (response) => {}, (error) => {
-	// 		alert(error.message);
-	// 	});
-	// }
+		this.searchBinding();
+	}
+
+	getSelectedMovie(e) {
+		this.selectedMovie = _.find(this.movies, (movie) => {
+			return movie._id.toString() === e.target.value;
+		});
+
+		this.searchBinding();
+	}
+
+	searchBinding() {
+		if (!this.selectedTheatre._id || !this.selectedMovie._id) {
+			this.binding = undefined;
+			return;
+		}
+
+		let isBound = false;
+		for (let m of this.selectedTheatre.movies) {
+			if (m.movie === this.selectedMovie._id) {
+				isBound = true;
+				this.binding = {
+					theatre: this.selectedTheatre._id,
+					movie: this.selectedMovie._id,
+					dates: m.dates,
+					timings: m.timings
+				};
+			}
+		}
+
+		if (isBound) {
+			for (let i in this.selectedTheatre.movies) {
+				if (this.selectedTheatre.movies[i].movie === this.selectedMovie._id) {
+					this.selectedTheatre.movies[i] = this.binding;
+				}
+			}
+
+			for (let i in this.selectedMovie.theatres) {
+				if (this.selectedMovie.theatres[i].theatre === this.selectedTheatre._id) {
+					this.selectedMovie.theatres[i] = this.binding;
+				}
+			}
+		} else {
+			this.binding = undefined;
+		}
+	}
+
+	addBinding() {
+		this.binding = {
+			theatre: this.selectedTheatre._id,
+			movie: this.selectedMovie._id,
+			dates: [],
+			timings: []
+		}
+
+		this.selectedMovie.theatres.push(this.binding);
+		this.selectedTheatre.movies.push(this.binding);
+	}
+
+	save() {
+		this.http.put(`/api/theatres/${this.selectedTheatre._id}/movies`, this.selectedTheatre.movies).subscribe( () => {
+			this.http.put(`/api/movies/${this.selectedMovie._id}/theatres`, this.selectedMovie.theatres).subscribe( (response) => {
+				if (response.status === 200) {
+					alert('updated');
+				}
+			});
+		});
+	}
+
+	delete() {
+		this.selectedTheatre.movies = _.reject(this.selectedTheatre.movies, (m) => {
+			return m.movie === this.selectedMovie._id;
+		});
+
+		this.selectedMovie.theatres = _.reject(this.selectedMovie.theatres, (t) => {
+			return t.theatre === this.selectedTheatre._id;
+		})
+
+		this.save();
+
+		this.searchBinding();
+	}
 }
