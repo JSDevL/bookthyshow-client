@@ -84,7 +84,7 @@ export class MoviesToTheatreComponent implements OnInit {
 	}
 
 	searchBinding() {
-		if (!this.selectedTheatre._id || !this.selectedMovie._id) {
+		if (!this.selectedTheatre || !this.selectedMovie) {
 			this.binding = undefined;
 			return;
 		}

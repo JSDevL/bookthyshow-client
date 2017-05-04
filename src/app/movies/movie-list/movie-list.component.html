@@ -1,19 +1,21 @@
-<h1>Added movies</h1>
-<table class="table table-bordered">
-	<tr>
-		<th>Title</th>
-		<th>Year</th>
-		<th>Released</th>
-		<th>Runtime</th>
-		<th>Genre</th>
-		<th></th>
-	</tr>
-	<tr *ngFor="let m of movies">
-		<td>{{m.Title}}</td>
-		<td>{{m.Year}}</td>
-		<td>{{m.Released}}</td>
-		<td>{{m.Runtime}}</td>
-		<td>{{m.Genre}}</td>
-		<td><a class="btn btn-danger" (click)="deleteMovie(m)">Delete</a></td>
-	</tr>
-</table>
+<div class="container">
+	<h4><b>ADDED MOVIES</b></h4>
+	<table class="table table-bordered">
+		<tr>
+			<th>Title</th>
+			<th>Year</th>
+			<th>Released</th>
+			<th>Runtime</th>
+			<th>Genre</th>
+			<th></th>
+		</tr>
+		<tr *ngFor="let m of movies">
+			<td>{{m.Title}}</td>
+			<td>{{m.Year}}</td>
+			<td>{{m.Released}}</td>
+			<td>{{m.Runtime}}</td>
+			<td>{{m.Genre}}</td>
+			<td><a class="btn btn-danger" (click)="deleteMovie(m)">Delete</a></td>
+		</tr>
+	</table>
+</div>

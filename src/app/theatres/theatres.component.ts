@@ -20,7 +20,7 @@ import { MoviesService } from '../movies/movies.service';
 @Component({
 	selector: 'app-theatres',
 	templateUrl: './theatres.component.html',
-	styleUrls: ['./theatres.component.css'],
+	styleUrls: ['./theatres.component.scss'],
 	providers: [CitiesService, TheatresService, MoviesService]
 })
 export class TheatresComponent implements OnInit {

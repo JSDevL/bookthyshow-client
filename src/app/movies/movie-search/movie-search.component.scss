@@ -1,0 +1,17 @@
+$grey: #f4f4f4;
+
+#app-movie-search{
+	background-color: $grey;
+
+	padding: 30px 0 30px 0;
+	margin: -30px 0 30px 0;
+}
+
+.btn-group{
+	float: left;
+	margin: 0 20px 20px 0;
+}
+
+.btn-group:last-child{
+	clear: right;
+}

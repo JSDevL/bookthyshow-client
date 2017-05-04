@@ -6,7 +6,7 @@ import { Movie } from '../movies.model';
 @Component({
 	selector: 'app-movie-search',
 	templateUrl: './movie-search.component.html',
-	styleUrls: ['./movie-search.component.css']
+	styleUrls: ['./movie-search.component.scss']
 })
 export class MovieSearchComponent implements OnInit {
 	searched: Movie;
