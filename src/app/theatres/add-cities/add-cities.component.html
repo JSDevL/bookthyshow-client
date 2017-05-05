@@ -1,12 +1,16 @@
 <h1>Add Cities</h1>
 <hr />
-<form class="form-inline">
-	<div class="form-group">
-		<label for="name">Name:</label>
-		<input type="text" id="name" name="name" class="form-control" [(ngModel)]="newCity.name">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="form-group">
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" class="form-control" [(ngModel)]="newCity.name">
+		</div>
 	</div>
-	<button class="btn btn-success" (click)="addCity(newCity)">Add</button>
-</form>
+	<div class="col-xs-12">
+		<button class="btn btn-success form-control" (click)="addCity(newCity)">Add</button>
+	</div>
+</div>
 <hr />
 <div>
 	<label >Added Cities:</label>

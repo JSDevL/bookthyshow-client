@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="row">
+		<div id="seats-container" class="col-xs-8">
+			<h5><b>SOFA Rs.240</b></h5>
+			<table class="table">
+				<tr *ngFor="let row of rows  | slice:0:2">
+					<td><b>{{row}}</b></td>
+					<td *ngFor="let col of columns">
+						<app-seat [row]="row" [col]="col"></app-seat>
+					</td>
+				</tr>
+			</table>
+			<h5><b>GOLD Rs.180</b></h5>
+			<table class="table">
+				<tr *ngFor="let row of rows  | slice:2:6">
+					<td><b>{{row}}</b></td>
+					<td *ngFor="let col of columns">
+						<app-seat [row]="row" [col]="col"></app-seat>
+					</td>
+				</tr>
+			</table>
+			<h5><b>ECONOMY Rs.120</b></h5>
+			<table class="table">
+				<tr *ngFor="let row of rows  | slice:6">
+					<td><b>{{row}}</b></td>
+					<td *ngFor="let col of columns">
+						<app-seat [row]="row" [col]="col"></app-seat>
+					</td>
+				</tr>
+			</table>
+		</div><!--col-xs-8-->
+
+		<div class="col-xs-4">
+			<div class="page-header">
+				<h4>Order Summary <small>*taxes apply</small></h4>
+			</div>
+			<div class="from-group">
+				<label>Number of seats:</label>
+				<select class="form-control" [value]="this.bookingService.seatsLimit" (change)="changeSeatsLimit($event)">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+			</div>
+		</div><!--col-xs-4-->
+	</div><!--row-->
+</div>

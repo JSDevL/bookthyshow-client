@@ -14,6 +14,9 @@ import { TheatresComponent } from './theatres/theatres.component';
 import { AddCitiesComponent } from './theatres/add-cities/add-cities.component';
 import { AddTheatresComponent } from './theatres/add-theatres/add-theatres.component';
 import { MoviesToTheatreComponent } from './theatres/movies-to-theatre/movies-to-theatre.component';
+import { BookingComponent } from './booking/booking.component';
+import { SeatsSelectComponent } from './booking/seats-select/seats-select.component';
+import { SeatComponent } from './booking/seats-select/seat/seat.component';
 
 @NgModule({
 	declarations: [
@@ -26,6 +29,9 @@ import { MoviesToTheatreComponent } from './theatres/movies-to-theatre/movies-to
 		AddCitiesComponent,
 		AddTheatresComponent,
 		MoviesToTheatreComponent,
+		BookingComponent,
+		SeatsSelectComponent,
+		SeatComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -1,0 +1,21 @@
+$red: #c02c39;
+
+.seat{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+
+	border: 1px #333 solid;
+	border-radius: 5px;
+
+	cursor: pointer;
+}
+
+.seat.selected{
+	background-color: $red;
+	color: white;
+}
+
+.seat.reserved{
+	background-color: #333;
+}
