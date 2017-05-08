@@ -9,7 +9,7 @@ export interface Movie{
 	imdbID: String;
 	Poster: String;
 	theatres?: {
-		theatre: String
+		theatre: any,
 		dates: String[],
 		timings: String[]
 	}[];

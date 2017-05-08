@@ -11,11 +11,15 @@ $red: #c02c39;
 	cursor: pointer;
 }
 
+.seat.blocked{
+	opacity: 0.2;
+}
+
 .seat.selected{
 	background-color: $red;
 	color: white;
 }
 
 .seat.reserved{
-	background-color: #333;
+	background-color: #aaa;
 }

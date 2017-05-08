@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
-import { routing } from './app.routes';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { MoviesComponent } from './movies/movies.component';
@@ -18,6 +17,14 @@ import { BookingComponent } from './booking/booking.component';
 import { SeatsSelectComponent } from './booking/seats-select/seats-select.component';
 import { SeatComponent } from './booking/seats-select/seat/seat.component';
 
+const routes: Routes = [
+	{ path: '', component: HomeComponent },
+	{ path: 'movies', component: MoviesComponent },
+	{ path: 'theatres', component: TheatresComponent },
+	{ path: 'movies-to-theatres', component: MoviesToTheatreComponent },
+	{ path: 'booking', component: BookingComponent }
+];
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -31,13 +38,13 @@ import { SeatComponent } from './booking/seats-select/seat/seat.component';
 		MoviesToTheatreComponent,
 		BookingComponent,
 		SeatsSelectComponent,
-		SeatComponent,
+		SeatComponent
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
 		HttpModule,
-		routing
+		RouterModule.forRoot(routes, { useHash: true })
 	],
 	providers: [],
 	bootstrap: [AppComponent]

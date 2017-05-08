@@ -31,5 +31,10 @@ export class TheatresService {
 			});
 			this.theatresUpdated.next(this.theatres);
 		});
+
+		this.http.get(`/api/theatres/`).subscribe( (response) => {
+			this.theatres = response.json();
+			this.theatresUpdated.next(this.theatres);
+		});
 	}
 }

@@ -3,12 +3,63 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 
 $grey: #f4f4f4;
+$darkGrey: #1f2533;
 $red: #c02c39;
 
 body{
-	padding-bottom: 30px;
+	min-height: 100%;
+	padding-top: 70px;
 }
 
-a.navbar-brand{
+.router-outlet-container{
+	min-height: 800px;
+}
+
+.brand{
 	font-family: 'Pacifico', cursive;
+	color: white;
+
+	span{
+		color: $red;
+	}
+}
+
+.navbar-fixed-top{
+	background-color: $darkGrey;
+    border-color: $darkGrey;
+
+	.navbar-nav > li > a{
+		color: white;
+		letter-spacing: 1px;
+		font-size: 1.2rem;
+		font-weight: bold;
+		text-transform: uppercase;
+
+		&:hover{
+			color: $red;
+		}
+	}
+
+	a.navbar-brand{
+		font-family: 'Pacifico', cursive;
+		color: white;
+
+		span{
+			color: $red;
+		}
+
+		&:hover{
+			color: $red;
+		}
+	}
+}
+
+footer{
+	margin-top: 20px;
+	padding: 20px 0;
+
+	color: #eee;
+	text-align: center;
+
+	background-color: $darkGrey;
 }

@@ -1,1 +1,60 @@
-<div class="container">Hello World!</div>
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="brand">Book<span>Thy</span>Show</h1>
+
+		<div class="row">
+			<div class="col-xs-offset-2 col-xs-8">
+				<form class="form-inline">
+					<div class="form-group">
+						<select class="form-control" (change)="onCitySelect($event)">
+							<option value="">Select City</option>
+							<option *ngFor="let city of cities" [value]="city._id">{{city.name}}</option>
+						</select>
+						<input type="text" class="form-control" placeholder="Search for Movie" (keyup)="onSearch($event)">
+					</div>
+				</form>
+			</div><!--col-xs-8-->
+		</div><!--row-->
+	</div>
+</div>
+
+<div id="searched-movies" *ngIf="searched">
+	<div class="container">
+		<h4><b>SEARCH RESULTS</b></h4>
+
+		<div class="row" *ngIf="searchedMovies.length">
+			<div class="col-xs-6 col-md-4" *ngFor="let movie of searchedMovies">
+				<a class="thumbnail" [ngStyle]="{ 'background': 'linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.45)), url('+ movie.Poster + ')' }">
+					{{movie.Title}}
+				</a>
+			</div>
+		</div>
+
+		<div *ngIf="!searchedMovies.length">
+			<p>No movies found with that title</p>
+		</div>
+	</div>
+</div>
+
+<div id="now-showing-movies" class="container">
+	<h4><b>NOW SHOWING</b></h4>
+
+	<div class="row" *ngIf="availableMovies.length">
+		<div class="col-sm-6 col-md-3" *ngFor="let movie of availableMovies">
+			<div class="thumbnail">
+				<img [src]="movie.Poster">
+				<div class="caption">
+					<h4><b>{{movie.Title}}</b> <small> {{movie.Runtime}}</small></h4>
+					<div class="btn-group">
+						<button type="button" class="genre btn btn-default btn-xs" *ngFor="let g of movie.Genre.split(', ')">{{g}}</button>
+					</div>
+				</div>
+				<a class="btn btn-default book">Book Now</a>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="!availableMovies.length">
+		<p>No movies available for this city</p>
+	</div>
+</div>

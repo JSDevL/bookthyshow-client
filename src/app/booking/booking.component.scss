@@ -1,3 +1,19 @@
+$red: #c02c39;
+
 .jumbotron{
 	margin-top: -20px;
+
+	color: white;
+
+    background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.45) ), url('../../assets/images/movie1.jpg');
+	background-size: cover;
+
+	.genre.btn{
+		color: white;
+		background: none;
+	}
+
+	.glyphicon-heart{
+		color: $red;
+	}
 }

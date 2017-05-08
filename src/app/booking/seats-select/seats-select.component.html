@@ -6,7 +6,7 @@
 				<tr *ngFor="let row of rows  | slice:0:2">
 					<td><b>{{row}}</b></td>
 					<td *ngFor="let col of columns">
-						<app-seat [row]="row" [col]="col"></app-seat>
+						<app-seat [row]="row" [col]="col" [seatClass]="'SOFA'"></app-seat>
 					</td>
 				</tr>
 			</table>
@@ -15,7 +15,7 @@
 				<tr *ngFor="let row of rows  | slice:2:6">
 					<td><b>{{row}}</b></td>
 					<td *ngFor="let col of columns">
-						<app-seat [row]="row" [col]="col"></app-seat>
+						<app-seat [row]="row" [col]="col" [seatClass]="'GOLD'"></app-seat>
 					</td>
 				</tr>
 			</table>
@@ -24,17 +24,14 @@
 				<tr *ngFor="let row of rows  | slice:6">
 					<td><b>{{row}}</b></td>
 					<td *ngFor="let col of columns">
-						<app-seat [row]="row" [col]="col"></app-seat>
+						<app-seat [row]="row" [col]="col" [seatClass]="'ECONOMY'"></app-seat>
 					</td>
 				</tr>
 			</table>
 		</div><!--col-xs-8-->
 
 		<div class="col-xs-4">
-			<div class="page-header">
-				<h4>Order Summary <small>*taxes apply</small></h4>
-			</div>
-			<div class="from-group">
+			<div class="form-group">
 				<label>Number of seats:</label>
 				<select class="form-control" [value]="this.bookingService.seatsLimit" (change)="changeSeatsLimit($event)">
 					<option value="1">1</option>
@@ -43,6 +40,24 @@
 					<option value="4">4</option>
 					<option value="5">5</option>
 				</select>
+			</div>
+			<div class="form-group">
+				<label>Date:</label>
+				<select class="form-control">
+					<option value="May 05, 2017">May 05, 2017</option>
+					<option value="May 06, 2017">May 06, 2017</option>
+				</select>
+			</div>
+
+			<div class="page-header">
+				<h4>Order Summary <small>*taxes apply</small></h4>
+				<ul class="list-group">
+					<li class="list-group-item">Cras justo odio</li>
+					<li class="list-group-item">Dapibus ac facilisis in</li>
+					<li class="list-group-item">Morbi leo risus</li>
+					<li class="list-group-item">Porta ac consectetur ac</li>
+					<li class="list-group-item">Vestibulum at eros</li>
+				</ul>
 			</div>
 		</div><!--col-xs-4-->
 	</div><!--row-->

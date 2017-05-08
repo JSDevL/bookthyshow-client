@@ -21,6 +21,7 @@ import { Seat } from '../../seat.model';
 export class SeatComponent implements OnInit {
 	@Input() row: String;
 	@Input() col: Number;
+	@Input() seatClass: String;
 	selected: Boolean;
 	reserved: Boolean;
 
@@ -52,12 +53,15 @@ export class SeatComponent implements OnInit {
 			this.bookingService.selectedSeatsUpdated.next( _.reject(this.bookingService.selectedSeats, (seat) => {
 				return seat.row === this.row && seat.col === this.col;
 			}));
-		} else if (this.bookingService.selectedSeats.length === this.bookingService.seatsLimit){
-			// if seatLimit reached
-			alert('cannot book more seats');
+		} else if (this.seatClass !== this.bookingService.allowedClass){
+			// if attempting to select from other class
+			alert('cannot select from this class');
 		} else if (this.reserved){
 			// if seat already reserved
 			alert('seat reserved');
+		} else if (this.bookingService.selectedSeats.length === this.bookingService.seatsLimit){
+			// if seatLimit reached
+			alert('cannot book more seats');
 		} else {
 			// select and update service
 			this.bookingService.selectedSeats.push({

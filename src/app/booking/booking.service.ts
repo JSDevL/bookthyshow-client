@@ -9,12 +9,12 @@ import { Seat } from './seat.model';
 
 @Injectable()
 export class BookingService{
-	// for seats limit
-	seatsLimitUpdated = new Subject();
-	seatsLimit: Number = 5;
 	// for selected seats
 	selectedSeatsUpdated = new Subject();
 	selectedSeats: Seat[] = [];
+	// for seats limit
+	seatsLimitUpdated = new Subject();
+	seatsLimit: Number = 5;
 	// for reserved seats
 	reservedSeatsUpdated = new Subject();
 	reservedSeats: Seat[] = [
@@ -27,6 +27,8 @@ export class BookingService{
 			col: 2
 		}
 	]
+	// seat class
+	allowedClass: String = 'GOLD';
 
 	constructor(){
 		this.selectedSeatsUpdated.subscribe( (update: Seat[]) => {
