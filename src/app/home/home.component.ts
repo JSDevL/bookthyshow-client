@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 import _ from 'underscore';
 
 /**
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
 	searchedMovies: Movie[] = [];
 
 	constructor(
+		private router: Router,
 		private http: Http,
 		private citiesService: CitiesService,
 		private moviesService: MoviesService
@@ -57,7 +59,7 @@ export class HomeComponent implements OnInit {
 		this.searchedMovies = [];
 		this.form.controls.search.reset();
 
-		const selectedCityID = this.form.controls.citySelect.value;
+		const selectedCityID = this.form.value.citySelect;
 
 		if(selectedCityID){
 			this.availableMovies = _.filter(this.movies, (movie) => {
@@ -71,7 +73,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	search(){
-		const toSearch = this.form.controls.search.value;
+		const toSearch = this.form.value.search;
 
 		if(toSearch){
 			this.searchedMovies = _.filter(this.availableMovies, (movie) => {
@@ -83,6 +85,15 @@ export class HomeComponent implements OnInit {
 	}
 
 	book(movie: Movie){
-		alert(movie.Title);
+		if(this.form.controls.citySelect.invalid){
+			return alert('select city first');
+		}
+
+		this.router.navigate(['/booking', 'date-time-select'], {
+			queryParams: {
+				city: this.form.value.citySelect,
+				movie: movie._id
+			}
+		});
 	}
 }
