@@ -29,6 +29,10 @@ body{
     border-color: $darkGrey;
 
 	.navbar-nav > li > a{
+		&:active, &:link, &:visited{
+			color: #eee;
+		}
+
 		color: white;
 		letter-spacing: 1px;
 		font-size: 1.2rem;
@@ -38,6 +42,10 @@ body{
 		&:hover{
 			color: $red;
 		}
+	}
+
+	.navbar-nav > li.active > a{
+		color: $darkGrey;
 	}
 
 	a.navbar-brand{

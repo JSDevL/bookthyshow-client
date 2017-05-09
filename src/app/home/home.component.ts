@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import _ from 'underscore';
 
@@ -24,14 +24,15 @@ import { Movie } from '../movies/movies.model';
 })
 export class HomeComponent implements OnInit {
 
-	// inputs
+	// form
+	@ViewChild('f')
+	form: HTMLFormElement;
+	// dependencies
 	movies: Movie[] = [];
 	cities: City[] = [];
 	// generated based on selected city and/or on search
 	availableMovies: Movie[] = [];
 	searchedMovies: Movie[] = [];
-	// flags
-	searched: Boolean = false;
 
 	constructor(
 		private http: Http,
@@ -51,33 +52,37 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
-	onCitySelect(event){
-		this.searched = false;
+	citySelect(){
+		// reset search
+		this.searchedMovies = [];
+		this.form.controls.search.reset();
 
-		const selectedCityID = event.target.value;
+		const selectedCityID = this.form.controls.citySelect.value;
 
-		if(!selectedCityID){
-			return this.availableMovies = this.movies;
-		}
-
-		this.availableMovies = _.filter(this.movies, (movie) => {
-			return _.find(movie.theatres, (t) => {
-				return t.theatre.city.toString() === selectedCityID;
+		if(selectedCityID){
+			this.availableMovies = _.filter(this.movies, (movie) => {
+				return _.find(movie.theatres, (t) => {
+					return t.theatre.city.toString() === selectedCityID;
+				});
 			});
-		});
+		} else {
+			this.availableMovies = this.movies;
+		}
 	}
 
-	onSearch(event){
-		this.searched = true;
+	search(){
+		const toSearch = this.form.controls.search.value;
 
-		const toSearch = event.target.value;
-
-		if(!toSearch){
-			this.searched = false;
+		if(toSearch){
+			this.searchedMovies = _.filter(this.availableMovies, (movie) => {
+				return movie.Title.toLowerCase().search(toSearch.toLowerCase()) !== -1;
+			});
+		} else {
+			this.searchedMovies = [];
 		}
+	}
 
-		this.searchedMovies = _.filter(this.availableMovies, (movie) => {
-			return movie.Title.toLowerCase().search(toSearch.toLowerCase()) !== -1;
-		});
+	book(movie: Movie){
+		alert(movie.Title);
 	}
 }
