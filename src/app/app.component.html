@@ -4,10 +4,11 @@
 			<a class="navbar-brand" [routerLink]="['/']">Book<span>Thy</span>Show</a>
 		</div>
 		<ul class="nav navbar-nav navbar-left">
-			<li><a [routerLink]="['/']">Home</a></li>
-			<li><a [routerLink]="['/movies']">Movies</a></li>
-			<li><a [routerLink]="['/theatres']">Theatres</a></li>
-			<li><a [routerLink]="['/booking']">Booking</a></li>
+			<li [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">Home</a></li>
+			<li [routerLinkActive]="'active'"><a [routerLink]="['/movies']">Movies</a></li>
+			<li [routerLinkActive]="'active'"><a [routerLink]="['/theatres']">Theatres</a></li>
+			<li [routerLinkActive]="'active'"><a [routerLink]="['/booking', 'date-time-select']">Booking/date-time-select</a></li>
+			<li [routerLinkActive]="'active'"><a [routerLink]="['/booking', 'seats-select']">Booking/seats-select</a></li>
 		</ul>
 	</div>
 </div>

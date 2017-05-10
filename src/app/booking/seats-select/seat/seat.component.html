@@ -1,3 +1,3 @@
-<div class="seat" [ngClass]="{'selected': selected, 'reserved': reserved, 'blocked': seatClass !== bookingService.allowedClass}" (click)="select()">
+<div class="seat" [ngClass]="{'selected': selected, 'reserved': reserved, 'blocked': seatClass !== seatsService.selectedClass}" (click)="select()">
 	{{col}}
 </div>

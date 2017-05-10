@@ -16,13 +16,31 @@ import { MoviesToTheatreComponent } from './theatres/movies-to-theatre/movies-to
 import { BookingComponent } from './booking/booking.component';
 import { SeatsSelectComponent } from './booking/seats-select/seats-select.component';
 import { SeatComponent } from './booking/seats-select/seat/seat.component';
+import { DateTimeSelectComponent } from './booking/date-time-select/date-time-select.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
 	{ path: 'movies', component: MoviesComponent },
 	{ path: 'theatres', component: TheatresComponent },
 	{ path: 'movies-to-theatres', component: MoviesToTheatreComponent },
-	{ path: 'booking', component: BookingComponent }
+	{
+		path: 'booking',
+		component: BookingComponent,
+		children: [
+			{
+				path: '', // default to date and time select
+				component: DateTimeSelectComponent
+			},
+			{
+				path: 'date-time-select',
+				component: DateTimeSelectComponent
+			},
+			{
+				path: 'seats-select',
+				component: SeatsSelectComponent
+			}
+		]
+	}
 ];
 
 @NgModule({
@@ -38,7 +56,8 @@ const routes: Routes = [
 		MoviesToTheatreComponent,
 		BookingComponent,
 		SeatsSelectComponent,
-		SeatComponent
+		SeatComponent,
+		DateTimeSelectComponent
 	],
 	imports: [
 		BrowserModule,

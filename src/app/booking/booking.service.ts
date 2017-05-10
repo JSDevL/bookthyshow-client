@@ -5,32 +5,50 @@ import { Subject } from 'rxjs/Subject';
  * Models
  */
 
-import { Seat } from './seat.model';
+import { City } from '../theatres/city.model';
+import { Theatre } from '../theatres/theatre.model';
+import { Movie } from '../movies/movies.model';
+import { Seat } from './seats-select/seat.model';
 
 @Injectable()
 export class BookingService{
-	// for selected seats
-	selectedSeatsUpdated = new Subject();
+
+	/*** Cities */
+	selectedCity: City;
+	selectedCityUpdated = new Subject();
+	/*** Theatres */
+	selectedTheatre: Theatre;
+	selectedTheatreUpdated = new Subject();
+	/*** Movies */
+	selectedMovie: Movie;
+	selectedMovieUpdated = new Subject();
+	/*** Class */
+	selectedClass: String = 'GOLD';
+	selectedClassUpdated = new Subject();
+	/*** Seats */
 	selectedSeats: Seat[] = [];
-	// for seats limit
-	seatsLimitUpdated = new Subject();
+	selectedSeatsUpdated = new Subject();
+	/*** Seats Limit */
 	seatsLimit: Number = 5;
-	// for reserved seats
-	reservedSeatsUpdated = new Subject();
-	reservedSeats: Seat[] = [
-		{
-			row: 'A',
-			col: 1
-		},
-		{
-			row: 'B',
-			col: 2
-		}
-	]
-	// seat class
-	allowedClass: String = 'GOLD';
+	seatsLimitUpdated = new Subject();
 
 	constructor(){
+		this.selectedCityUpdated.subscribe( (update: City) => {
+			this.selectedCity = update;
+		});
+
+		this.selectedTheatreUpdated.subscribe( (update: Theatre) => {
+			this.selectedTheatre = update;
+		});
+
+		this.selectedMovieUpdated.subscribe( (update: Movie) => {
+			this.selectedMovie = update;
+		});
+
+		this.selectedClassUpdated.subscribe( (update: String) => {
+			this.selectedClass = update;
+		});
+
 		this.selectedSeatsUpdated.subscribe( (update: Seat[]) => {
 			this.selectedSeats = update;
 		});

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 /**
  * Services
@@ -14,9 +15,18 @@ import { BookingService } from './booking.service';
 })
 export class BookingComponent implements OnInit {
 
-	constructor(private bookingService: BookingService) {}
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private bookingService: BookingService
+	) {}
 
 	ngOnInit() {
+		// if( !this.route.snapshot.queryParams.movie ){
+		// 	this.router.navigate(['/']);
+		// }
+
+		this.bookingService.selectedMovie = this.route.snapshot.queryParams.movie;
 	}
 
 }
