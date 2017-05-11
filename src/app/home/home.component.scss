@@ -1,5 +1,44 @@
 $red: #c02c39;
 
+.modal{
+	display: block;
+	background-color: rgba(0,0,0,0.7);
+
+	table{
+		width: 100%;
+
+		td{
+			padding: 10px;
+			vertical-align: middle;
+
+			label{
+				display: block;
+				margin: 0px;
+			}
+		}
+
+		td.full-width{
+			width: 100%;
+		}
+	}
+
+	&.fade{
+		visibility: hidden;
+	    opacity: 0;
+    	transition: opacity .15s linear;
+	}
+
+	&.fade.in{
+		visibility: visible;
+	    opacity: 1;
+	}
+
+	.form-control.ng-invalid.ng-touched, .form-control.ng-invalid.ng-touched:focus{
+		border: $red solid 1px;
+		box-shadow: 0 0 5px $red;
+	}
+}
+
 .jumbotron{
 	margin-top: -20px;
 
@@ -71,4 +110,9 @@ $red: #c02c39;
 
 		background: $red;
 	}
+}
+
+.btn.red{
+	color: white;
+	background: $red;
 }

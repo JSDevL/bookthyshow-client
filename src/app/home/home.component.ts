@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import * as _ from 'underscore';
@@ -27,11 +28,11 @@ export class HomeComponent implements OnInit {
 
 	// form
 	@ViewChild('f')
-	form: HTMLFormElement;
+	form: NgForm;
 	// dependencies
 	movies: Movie[] = [];
 	cities: City[] = [];
-	// generated based on selected city and/or on search
+	// generated
 	availableMovies: Movie[] = [];
 	searchedMovies: Movie[] = [];
 
@@ -43,41 +44,51 @@ export class HomeComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		// get dependencies
 		this.http.get(`/api/cities/`).subscribe( (response: Response) => {
 			this.cities = <City[]>response.json();
 			this.citiesService.citiesUpdated.next(this.cities);
+
+			try {
+				this.citySelect(this.cities[0]._id);
+			} catch (err) {
+				console.log('waiting for movies to load');
+			}
 		});
 
 		this.http.get(`/api/movies/populated`).subscribe( (response: Response) => {
 			this.availableMovies = this.movies = <Movie[]>response.json();
 			this.moviesService.moviesUpdated.next(this.movies);
+
+			try {
+				this.citySelect(this.cities[0]._id);
+			} catch (err) {
+				console.log('waiting for cities to load');
+			}
 		});
 	}
 
-	citySelect(){
+	citySelect(selectedCityID) {
 		// reset search
 		this.searchedMovies = [];
 		this.form.controls.search.reset();
 
-		const selectedCityID = this.form.value.citySelect;
+		this.form.setValue({
+			'citySelect': selectedCityID,
+			'search': ''
+		});
 
-		if(selectedCityID){
-			this.availableMovies = _.filter(this.movies, (movie: Movie) => {
-				if( _.find(movie.theatres, (t) => t.theatre.city.toString() === selectedCityID) ){
-					return true;
-				} else {
-					return false;
-				}
-			});
-		} else {
-			this.availableMovies = this.movies;
-		}
+		this.availableMovies = _.filter(this.movies, (movie: Movie) => {
+			if ( _.find(movie.theatres, (t) => t.theatre.city.toString() === selectedCityID) ) {
+				return true;
+			} else {
+				return false;
+			}
+		});
 	}
 
-	search(){
-		const toSearch = this.form.value.search;
-
-		if(toSearch){
+	search(toSearch ) {
+		if (toSearch) {
 			this.searchedMovies = _.filter(this.availableMovies, (movie: Movie) => {
 				return movie.Title.toLowerCase().search(toSearch.toLowerCase()) !== -1;
 			});
@@ -86,11 +97,7 @@ export class HomeComponent implements OnInit {
 		}
 	}
 
-	book(movie: Movie){
-		if(this.form.controls.citySelect.invalid){
-			return alert('select city first');
-		}
-
+	book(movie: Movie) {
 		this.router.navigate(['/booking', 'date-time-select'], {
 			queryParams: {
 				city: this.form.value.citySelect,
