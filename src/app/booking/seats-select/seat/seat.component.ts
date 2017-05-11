@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import _ from 'underscore';
+import * as _ from 'underscore';
 
 /**
  * Services

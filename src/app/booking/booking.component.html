@@ -1,14 +1,13 @@
-<div class="jumbotron">
+<div class="jumbotron" *ngIf="bookingService.selectedMovie" 
+	[ngStyle]="{'background-image': 'linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.45) ), url(' + bookingService.selectedMovie.Poster + ')'}">
 	<div class="container">
 		<h2 class="pull-right"><span class="glyphicon glyphicon-heart"></span> <b>4.3</b></h2>
-		<h2><b>Guardians of the Galaxy vol.2</b></h2>
+		<h2><b>{{bookingService.selectedMovie.Title}}</b></h2>
 		<div class="btn-group">
-			<button type="button" class="genre btn btn-default btn-xs">Fantasy</button>
-			<button type="button" class="genre btn btn-default btn-xs">Adventure</button>
-			<button type="button" class="genre btn btn-default btn-xs">Action</button>
+			<button type="button" class="genre btn btn-default btn-xs" *ngFor="let genre of bookingService.selectedMovie.Genre.split(', ')">{{genre}}</button>
 		</div>
 
-		<h4><span class="glyphicon glyphicon-time"></span> 2 hrs 16 mins</h4>
+		<h4><span class="glyphicon glyphicon-time"></span> {{bookingService.selectedMovie.Runtime}}</h4>
 	</div>
 </div>
 

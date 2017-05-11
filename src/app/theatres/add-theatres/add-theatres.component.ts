@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import _ from 'underscore';
+import * as _ from 'underscore';
 
 /**
  * Models

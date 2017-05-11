@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
-import _ from 'underscore';
+import * as _ from 'underscore';
 
 /**
  * Services
@@ -43,13 +43,13 @@ export class HomeComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.http.get(`/api/cities/`).subscribe( (response) => {
-			this.cities = response.json();
+		this.http.get(`/api/cities/`).subscribe( (response: Response) => {
+			this.cities = <City[]>response.json();
 			this.citiesService.citiesUpdated.next(this.cities);
 		});
 
-		this.http.get(`/api/movies/populated`).subscribe( (response) => {
-			this.availableMovies = this.movies = response.json();
+		this.http.get(`/api/movies/populated`).subscribe( (response: Response) => {
+			this.availableMovies = this.movies = <Movie[]>response.json();
 			this.moviesService.moviesUpdated.next(this.movies);
 		});
 	}
@@ -62,10 +62,12 @@ export class HomeComponent implements OnInit {
 		const selectedCityID = this.form.value.citySelect;
 
 		if(selectedCityID){
-			this.availableMovies = _.filter(this.movies, (movie) => {
-				return _.find(movie.theatres, (t) => {
-					return t.theatre.city.toString() === selectedCityID;
-				});
+			this.availableMovies = _.filter(this.movies, (movie: Movie) => {
+				if( _.find(movie.theatres, (t) => t.theatre.city.toString() === selectedCityID) ){
+					return true;
+				} else {
+					return false;
+				}
 			});
 		} else {
 			this.availableMovies = this.movies;
@@ -76,7 +78,7 @@ export class HomeComponent implements OnInit {
 		const toSearch = this.form.value.search;
 
 		if(toSearch){
-			this.searchedMovies = _.filter(this.availableMovies, (movie) => {
+			this.searchedMovies = _.filter(this.availableMovies, (movie: Movie) => {
 				return movie.Title.toLowerCase().search(toSearch.toLowerCase()) !== -1;
 			});
 		} else {

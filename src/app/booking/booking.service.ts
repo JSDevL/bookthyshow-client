@@ -16,12 +16,12 @@ export class BookingService{
 	/*** Cities */
 	selectedCity: City;
 	selectedCityUpdated = new Subject();
-	/*** Theatres */
-	selectedTheatre: Theatre;
-	selectedTheatreUpdated = new Subject();
 	/*** Movies */
 	selectedMovie: Movie;
 	selectedMovieUpdated = new Subject();
+	/*** Theatres */
+	selectedTheatre: Theatre;
+	selectedTheatreUpdated = new Subject();
 	/*** Class */
 	selectedClass: String = 'GOLD';
 	selectedClassUpdated = new Subject();

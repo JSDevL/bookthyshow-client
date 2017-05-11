@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { CitiesService } from '../cities.service';
 import { TheatresService } from '../theatres.service';
 import { MoviesService } from '../../movies/movies.service';
-import _ from 'underscore';
+import * as _ from 'underscore';
 
 /**
  * Models

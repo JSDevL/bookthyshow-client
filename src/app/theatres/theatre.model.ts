@@ -2,7 +2,7 @@ export class Theatre{
 	_id?: String;
 	name: String;
 	location: String;
-	city: String;
+	city: any;
 	movies?: {
 		movie: String
 		dates: String[],

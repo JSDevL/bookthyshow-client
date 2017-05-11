@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import * as io from 'socket.io-client';
-import _ from 'underscore';
+import * as _ from 'underscore';
 
 /**
  * Models

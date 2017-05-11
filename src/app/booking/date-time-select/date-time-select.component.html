@@ -1,30 +1,36 @@
 <div id="date-time-select">
 	<div id="date-select">
 		<div class="container">
+			<div><label>Select Date: </label></div>
 			<div class="btn-group" role="group" aria-label="...">
-				<button type="button" class="btn btn-default">01/03</button>
-				<button type="button" class="btn btn-default">02/03</button>
-				<button type="button" class="btn btn-default">03/03</button>
+				<button type="button" class="btn btn-default date" 
+					[ngClass]="{'active': selectedDate.toDateString() === date.toDateString()}" 
+					*ngFor="let date of availableDates" 
+					(click)="selectDate(date)">
+					<h4><b>{{date.getDate()}}</b></h4>{{['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()]}}
+				</button>
 			</div>
 		</div>
 	</div>
 
 	<div id="time-select">
 		<div class="container">
+			<div><label>Select Time: </label></div>
 			<ul class="list-group">
-				<li class="list-group-item">
+				<li class="list-group-item" *ngFor="let binding of availableBindings">
 					<div class="row">
 						<div class="col-xs-2">
-							Vinay Theatre
+							{{binding.theatre.name}}
 						</div>
 						<div class="col-xs-10">
-							<div class="btn btn-default">01:00PM</div>
-							<div class="btn btn-default">02:00PM</div>
-							<div class="btn btn-default">03:00PM</div>
+							<div class="btn btn-default time" *ngFor="let timing of uniqSortedDates(binding.timings)">{{timing.getHours()}}:{{timing.getMinutes()}}</div>
 						</div>
 					</div>
 				</li>
 			</ul>
+			<div *ngIf="!availableBindings.length">
+				No Theatres showing your movie :(
+			</div>
 		</div>
 	</div>
 </div>
